@@ -1,52 +1,52 @@
-import { PrismaClient } from '@prisma/client'
-import { ICatalogRepository } from '../interface/catalogRepository.interface'
-import { Product } from '../models/product.model'
+import { PrismaClient } from "@prisma/client";
+import { ICatalogRepository } from "../interface/catalogRepository.interface";
+import { Product } from "../models/product.model";
+import { NotFoundError } from "../utils";
 
 export class CatalogRepository implements ICatalogRepository {
-
-  _prisma: PrismaClient
+  _prisma: PrismaClient;
 
   constructor() {
-    this._prisma = new PrismaClient()
+    this._prisma = new PrismaClient();
   }
 
-  async create (data: Product): Promise<Product> {
+  async create(data: Product): Promise<Product> {
     return this._prisma.product.create({
-      data
-    })
-  }
-  async update (data: Product): Promise<Product> {
-    return this._prisma.product.update({
-      where: {
-        id: data.id
-      },
-      data
-    })
-  }
-  async delete (id: any) {
-    return this._prisma.product.delete({
-      where: {
-        id
-      }
-    })
-  }
-  async find (limit: number, offset: number): Promise<Product[]> {
-    return this._prisma.product.findMany({
-      skip: offset,
-      take: limit
+      data,
     });
   }
-  async findOne (id: number): Promise<Product> {
+  async update(data: Product): Promise<Product> {
+    return this._prisma.product.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    });
+  }
+  async delete(id: any) {
+    return this._prisma.product.delete({
+      where: {
+        id,
+      },
+    });
+  }
+  async find(limit: number, offset: number): Promise<Product[]> {
+    return this._prisma.product.findMany({
+      skip: offset,
+      take: limit,
+    });
+  }
+  async findOne(id: number): Promise<Product> {
     const product = await this._prisma.product.findUnique({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
 
-    if(!product) {
-      throw new Error('Product not found')
+    if (product) {
+      return Promise.resolve(product);
     }
 
-    return product
+    throw new NotFoundError("Product not found");
   }
 }

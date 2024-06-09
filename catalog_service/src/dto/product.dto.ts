@@ -1,28 +1,28 @@
-import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
 
 export class CreateProductRequest {
   @IsString()
   @IsNotEmpty()
-  name: string
+  name: string;
 
   @IsString()
-  description: string
+  description: string;
 
   @IsNumber()
   @Min(1)
-  price: number
+  price: number;
 
   @IsNumber()
-  stock: number
+  stock: number;
 }
 
 export class UpdateProductRequest {
-  name?: string
+  name?: string;
 
-  description?: string
+  description?: string;
 
-  @Min(1)
-  price?: number
+  price?: number;
 
-  stock: number
+  @IsNumber()
+  stock?: number;
 }
