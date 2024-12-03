@@ -18,6 +18,7 @@
     "@sinclair/typebox": "^0.32.31",
     "ajv": "^8.14.0",
     "axios": "^1.7.2",
+    "big.js": "^6.2.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cors": "^2.8.5",
@@ -32,6 +33,7 @@
     "pino-pretty": "^11.1.0"
   },
   "devDependencies": {
+    "@types/big.js": "^6.2.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",

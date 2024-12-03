@@ -1,42 +1,50 @@
-import { ICatalogRepository } from '../interface/catalogRepository.interface'
+import { ICatalogRepository } from "../interface/catalogRepository.interface";
 
 export class CatalogService {
-  private _repository: ICatalogRepository
+  private _repository: ICatalogRepository;
 
-  constructor (repository: ICatalogRepository) {
-    this._repository = repository
+  constructor(repository: ICatalogRepository) {
+    this._repository = repository;
   }
 
-  async createProduct (input: any) {
-    const data = await this._repository.create(input)
+  async createProduct(input: any) {
+    const data = await this._repository.create(input);
     if (!data.id) {
-      throw new Error('unable to create product')
+      throw new Error("unable to create product");
     }
-    return data
+    return data;
   }
 
-  async updateProduct (input: any) {
-    const data = await this._repository.update(input)
+  async updateProduct(input: any) {
+    const data = await this._repository.update(input);
     if (!data.id) {
-      throw new Error('unable to update product')
+      throw new Error("unable to update product");
     }
-    return data
+    return data;
   }
 
   // instead of this we will get product from Elastic search
-  async getProducts (limit: number, offset: number) {
-    const products = await this._repository.find(limit, offset)
-    return products
+  async getProducts(limit: number, offset: number) {
+    const products = await this._repository.find(limit, offset);
+    return products;
   }
 
-  async getProduct (id: number) {
-    const product = await this._repository.findOne(id)
-    return product
+  async getProduct(id: number) {
+    const product = await this._repository.findOne(id);
+    return product;
   }
 
-  async deleteProduct (id: number) {
-    const response = await this._repository.delete(id)
+  async deleteProduct(id: number) {
+    const response = await this._repository.delete(id);
     // delete record from Elastic search
-    return response
+    return response;
+  }
+
+  async getProductStock(ids: number[]) {
+    const products = await this._repository.findStock(ids);
+    if (!products) {
+      throw new Error("unable to get product stock details");
+    }
+    return products;
   }
 }

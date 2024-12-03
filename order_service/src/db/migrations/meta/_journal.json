@@ -15,6 +15,13 @@
       "when": 1717929183431,
       "tag": "0001_silent_red_hulk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1732894382236,
+      "tag": "0002_furry_storm",
+      "breakpoints": true
     }
   ]
 }
