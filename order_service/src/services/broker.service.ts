@@ -7,12 +7,12 @@ import { OrderEvent } from "../types";
 export const InitializeBroker = async () => {
   const producer = await MessageBroker.connectProducer<Producer>();
   producer.on("producer.connect", () => {
-    console.log("producer connected successfully");
+    console.log("Order service producer connected successfully");
   });
 
   const consumer = await MessageBroker.connectConsumer<Consumer>();
   consumer.on("consumer.connect", () => {
-    console.log("consumer connected successfully");
+    console.log("Order service consumer connected successfully");
   });
 
   // keep listening to comsumers events
@@ -21,7 +21,7 @@ export const InitializeBroker = async () => {
 };
 
 // publish dedicated events based on usecases
-export const SendCreateOrdermessage = async (data: any) => {
+export const SendCreateOrderMessage = async (data: any) => {
   const result = await MessageBroker.publish({
     event: OrderEvent.CREATE_ORDER,
     topic: "CatalogEvents",

@@ -1,4 +1,5 @@
 import { ICatalogRepository } from "../interface/catalogRepository.interface";
+import { OrderWithLineItems } from "../types/message.type";
 
 export class CatalogService {
   private _repository: ICatalogRepository;
@@ -46,5 +47,25 @@ export class CatalogService {
       throw new Error("unable to get product stock details");
     }
     return products;
+  }
+
+  async handleBrokerMessage(message: any) {
+    console.log("Catalog Service received message", message);
+    const orderData = message.data as OrderWithLineItems;
+    const { orderItems } = orderData;
+    orderItems.forEach(async (item) => {
+      console.log("Updating stock for product", item.productId, item.qty);
+      const product = await this.getProduct(item.productId);
+      if (!product) {
+        console.log(
+          "Product not found during stock update for create order",
+          item.productId
+        );
+      } else {
+        const updatedStock = product.stock - item.qty;
+        await this.updateProduct({ ...product, stock: updatedStock });
+      }
+      // perform stock update operation
+    });
   }
 }

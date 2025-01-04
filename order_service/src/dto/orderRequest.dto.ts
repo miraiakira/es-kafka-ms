@@ -20,9 +20,3 @@ export interface OrderWithLineItems {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
-// orderNumber: integer("order_number").notNull().unique(),
-// customerId: integer("customer_id").notNull(),
-// amount: numeric("amount").notNull(),
-// status: varchar("status").notNull(),
-// txnId: varchar("txn_id").notNull(),
