@@ -25,7 +25,7 @@ export const CreateOrder = async (
       productId: item.productId,
       itemName: item.itemName,
       qty: item.qty,
-      price: Number(item.price),
+      price: item.price,
     } as OrderLineItemType);
   });
 
@@ -41,9 +41,9 @@ export const CreateOrder = async (
     orderItems: orderLineItems,
   };
 
-  // const order = await repo.createOrder(orderInput);
-  // await cartRepo.clearCartData(userId);
-  // console.log("Order created", order);
+  const order = await repo.createOrder(orderInput);
+  await cartRepo.clearCartData(userId);
+  console.log("Order created", order);
   // fire a message to subscription service [catalog service] to update the stock
   await SendCreateOrderMessage(orderInput);
   // return success message

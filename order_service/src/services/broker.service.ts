@@ -22,21 +22,19 @@ export const InitializeBroker = async () => {
 
 // publish dedicated events based on usecases
 export const SendCreateOrderMessage = async (data: any) => {
-  const result = await MessageBroker.publish({
+  await MessageBroker.publish({
     event: OrderEvent.CREATE_ORDER,
     topic: "CatalogEvents",
     headers: {},
     message: data,
   });
-  return result;
 };
 
 export const SendOrderCancelMessage = async (data: any) => {
-  const result = await MessageBroker.publish({
+  await MessageBroker.publish({
     event: OrderEvent.CANCEL_ORDER,
     topic: "CatalogEvents",
     headers: {},
     message: data,
   });
-  return result;
 };

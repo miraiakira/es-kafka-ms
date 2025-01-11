@@ -14,12 +14,12 @@ export class BrokerService {
   public async initializeBroker() {
     this.producer = await MessageBroker.connectProducer<Producer>();
     this.producer.on("producer.connect", () => {
-      console.log("Catalog service producer connected successfully");
+      console.log("Catalog Service Producer connected successfully");
     });
 
     this.consumer = await MessageBroker.connectConsumer<Consumer>();
     this.consumer.on("consumer.connect", () => {
-      console.log("Catalog service consumer connected successfully");
+      console.log("Catalog Service Consumer connected successfully");
     });
 
     // keep listening to comsumers events

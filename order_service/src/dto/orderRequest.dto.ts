@@ -4,7 +4,7 @@ export type OrderLineItemType = {
   itemName: string;
   orderId: number;
   qty: number;
-  price: number;
+  price: string;
   createdAt: Date;
   updatedAt: Date;
 };
