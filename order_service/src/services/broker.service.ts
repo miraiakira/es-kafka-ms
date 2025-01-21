@@ -1,5 +1,5 @@
 import { Consumer, Producer } from "kafkajs";
-import { MessageBroker } from "../utils/broker";
+import { MessageBroker } from "../utils";
 import { HandleSubscription } from "./order.service";
 import { OrderEvent } from "../types";
 
