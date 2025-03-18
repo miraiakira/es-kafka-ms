@@ -7,7 +7,7 @@ import { InitializeBroker } from "./service/broker.service";
 
 export const ExpressApp = async () => {
   const app = express();
-  app.use(cors());
+  app.use(cors({ origin: "*" }));
   app.use(express.json());
   app.use(httpLogger);
 

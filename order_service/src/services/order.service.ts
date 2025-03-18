@@ -104,10 +104,10 @@ export const HandleSubscription = async (message: MessageType) => {
 };
 
 export const CheckoutOrder = async (
-  orderId: number,
+  orderNumber: number,
   repo: OrderRepositoryType
 ) => {
-  const order = await repo.findOrder(orderId);
+  const order = await repo.findOrderByNumber(orderNumber);
   if (!order) {
     throw new Error("Order not found");
   }

@@ -1,9 +1,10 @@
 import express, { NextFunction, Request, Response } from "express";
 import { RequestAuthorizer } from "./middleware";
 import * as service from "../service/payment.service";
+import { PaymentGateway, StripePayment } from "../utils";
 
 const router = express.Router();
-const PaymentGateway = {};
+const paymentGateway: PaymentGateway = StripePayment;
 
 router.post(
   "/create-payment",
@@ -21,7 +22,7 @@ router.post(
       const response = await service.CreatePayment(
         user.id,
         orderNumber,
-        PaymentGateway
+        paymentGateway
       );
 
       res
@@ -49,7 +50,7 @@ router.get(
       return;
     }
     try {
-      await service.VerifyPayment(paymentId, PaymentGateway);
+      await service.VerifyPayment(paymentId, paymentGateway);
       res.status(200).json({ message: "Payment verification completed" });
     } catch (error) {
       next(error);

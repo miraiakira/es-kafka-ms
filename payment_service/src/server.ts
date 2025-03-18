@@ -1,10 +1,12 @@
+import * as cfg from "./config";
 import { ExpressApp } from "./express-app";
 import { logger } from "./utils";
-const PORT = process.env.APP_PORT || 9003;
 
 export const StartServer = async () => {
   const expressApp = await ExpressApp();
-  expressApp.listen(PORT, () => logger.info(`App is listening port ${PORT}!`));
+  expressApp.listen(cfg.APP_PORT, () =>
+    logger.info(`App is listening port ${cfg.APP_PORT}!`)
+  );
 
   process.on("uncaughtException", async (err) => {
     logger.error(err);

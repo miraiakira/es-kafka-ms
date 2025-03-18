@@ -6,6 +6,9 @@ import { OrderWithLineItems } from "../dto/orderRequest.dto";
 export type OrderRepositoryType = {
   createOrder: (lineItem: OrderWithLineItems) => Promise<number>;
   findOrder: (id: number) => Promise<OrderWithLineItems | null>;
+  findOrderByNumber: (
+    orderNumber: number
+  ) => Promise<OrderWithLineItems | null>;
   updateOrder: (id: number, status: string) => Promise<OrderWithLineItems>;
   deleteOrder: (id: number) => Promise<boolean>;
   findOrdersByCustomerId: (id: number) => Promise<OrderWithLineItems[]>;
@@ -40,6 +43,21 @@ const createOrder = async (lineItem: OrderWithLineItems): Promise<number> => {
 const findOrder = async (id: number): Promise<OrderWithLineItems | null> => {
   const order = await DB.query.orders.findFirst({
     where: (orders, { eq }) => eq(orders.id, id),
+    with: {
+      lineItems: true,
+    },
+  });
+  if (!order) {
+    throw new Error("Order not found");
+  }
+  return order as unknown as OrderWithLineItems;
+};
+
+const findOrderByNumber = async (
+  orderNumber: number
+): Promise<OrderWithLineItems | null> => {
+  const order = await DB.query.orders.findFirst({
+    where: (orders, { eq }) => eq(orders.orderNumber, orderNumber),
     with: {
       lineItems: true,
     },
@@ -85,4 +103,5 @@ export const OrderRepository: OrderRepositoryType = {
   updateOrder,
   deleteOrder,
   findOrdersByCustomerId,
+  findOrderByNumber,
 };
